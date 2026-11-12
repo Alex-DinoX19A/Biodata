@@ -48,5 +48,25 @@ window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
   if (e.matches) setMenu(false);
 });
 
+/* ---------- Animasi saat elemen masuk ke layar ---------- */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduceMotion && 'IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(
+    '.section__title, .section__lead, .about > *, .panel__title--center, .chips .chip, #kontak .actions, .contact-alt'
+  ).forEach((element) => {
+    element.classList.add('reveal');
+    revealObserver.observe(element);
+  });
+}
+
 /* ---------- Tahun footer ---------- */
 document.getElementById('year').textContent = new Date().getFullYear();
