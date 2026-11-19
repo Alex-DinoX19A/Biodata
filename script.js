@@ -5,7 +5,7 @@ const menu = document.getElementById('menu');
 const menuBtn = document.getElementById('menu-btn');
 const themeBtns = document.querySelectorAll('[data-tema]');
 
-/* ---------- Tema ---------- */
+
 function setTheme(name) {
   root.dataset.theme = name;
   themeBtns.forEach((btn) => {
@@ -14,7 +14,7 @@ function setTheme(name) {
   try {
     localStorage.setItem('tema', name);
   } catch (e) {
-    /* penyimpanan tidak tersedia, abaikan */
+    
   }
 }
 
@@ -24,7 +24,7 @@ themeBtns.forEach((btn) => {
 
 setTheme(root.dataset.theme);
 
-/* ---------- Menu mobile ---------- */
+
 function setMenu(open) {
   menu.classList.toggle('is-open', open);
   menuBtn.setAttribute('aria-expanded', String(open));
@@ -35,7 +35,6 @@ menuBtn.addEventListener('click', () => {
   setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
 });
 
-// Tutup menu setelah memilih tautan atau menekan Escape
 menu.querySelectorAll('a').forEach((link) => {
   link.addEventListener('click', () => setMenu(false));
 });
@@ -48,7 +47,7 @@ window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
   if (e.matches) setMenu(false);
 });
 
-/* ---------- Animasi saat elemen masuk ke layar ---------- */
+
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (!reduceMotion && 'IntersectionObserver' in window) {
   const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -68,13 +67,10 @@ if (!reduceMotion && 'IntersectionObserver' in window) {
   });
 }
 
-/* ---------- Tahun footer ---------- */
+
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ==========================================================
-   Animasi tambahan bertema 8-bit
-   (dekorasi dibuat lewat JS, jadi isi HTML tetap sama)
-   ========================================================== */
+
 
 function buatEl(tag, className, parent) {
   const node = document.createElement(tag);
@@ -83,7 +79,6 @@ function buatEl(tag, className, parent) {
   return node;
 }
 
-/* ---------- Bilah progres scroll (melangkah per 1/40, gaya piksel) ---------- */
 (function progresScroll() {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
@@ -109,7 +104,6 @@ function buatEl(tag, className, parent) {
   perbarui();
 })();
 
-/* ---------- Kilat singkat saat ganti tema ---------- */
 if (!reduceMotion) {
   themeBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -120,9 +114,8 @@ if (!reduceMotion) {
   });
 }
 
-/* Sisanya hanya jalan jika pengguna tidak meminta gerak dikurangi */
 if (!reduceMotion) {
-  /* ---------- Bintang piksel + meteor ---------- */
+  
   const lapisan = buatEl('div', 'px-bg', document.body);
   lapisan.setAttribute('aria-hidden', 'true');
 
@@ -152,10 +145,10 @@ if (!reduceMotion) {
   }
   setTimeout(luncurkanMeteor, 2500);
 
-  /* ---------- Slime piksel melompat di dasar hero ---------- */
+  
   const hero = document.querySelector('.hero');
   if (hero) {
-    // o = badan, h = kilau, e = mata
+    
     const slime = [
       '...oooo...',
       '..ohoooo..',
@@ -165,7 +158,7 @@ if (!reduceMotion) {
       '.oooooooo.'
     ];
     const warna = { e: 'var(--bg)', h: 'var(--fg)', o: 'var(--accent-2)' };
-    const urutan = ['e', 'h', 'o']; // yang pertama tampil paling atas
+    const urutan = ['e', 'h', 'o'];
     const bayangan = [];
     urutan.forEach((kode) => {
       slime.forEach((baris, y) => {
@@ -182,7 +175,6 @@ if (!reduceMotion) {
     piksel.style.boxShadow = bayangan.join(',');
   }
 
-  /* ---------- Judul hero diketik huruf demi huruf ---------- */
   const judul = document.querySelector('.hero__title');
   if (judul) {
     const teks = judul.textContent;
@@ -211,9 +203,8 @@ if (!reduceMotion) {
     setTimeout(ketik, 500);
   }
 
-  /* ---------- Ledakan piksel saat klik ---------- */
   document.addEventListener('click', (e) => {
-    if (e.detail === 0) return; // klik dari keyboard, lewati
+    if (e.detail === 0) return; 
     const jumlah = 8;
     for (let i = 0; i < jumlah; i += 1) {
       const p = buatEl('span', 'px-burst', document.body);
